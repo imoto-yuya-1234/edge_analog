@@ -1,0 +1,67 @@
+{
+    "appKeys": {
+        "KEY_COLOR_BLUE": 8,
+        "KEY_COLOR_GREEN": 7,
+        "KEY_COLOR_RED": 6,
+        "KEY_CONNECTION": 1,
+        "KEY_INVERT": 0,
+        "KEY_SHOW_BATTERY": 5,
+        "KEY_SHOW_DATE": 3,
+        "KEY_SHOW_SECOND": 4,
+        "KEY_SHOW_TICKS": 2
+    },
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "Yuya Imoto",
+    "enableMultiJS": true,
+    "longName": "Edge Analog",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/image_main",
+                "menuIcon": true,
+                "name": "IMAGE_MAIN",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "file": "images/not_connection_state_white",
+                "name": "NOT_CONNECTION_STATE_WHITE",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk"
+                ],
+                "type": "bitmap"
+            },
+            {
+                "file": "images/not_connection_state_black",
+                "name": "NOT_CONNECTION_STATE_BLACK",
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk"
+                ],
+                "type": "bitmap"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Edge Analog",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
+    "uuid": "b6a12803-1308-4a3e-b875-f6597d18bc13",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
