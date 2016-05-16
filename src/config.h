@@ -9,6 +9,7 @@
 #define KEY_COLOR_RED     6
 #define KEY_COLOR_GREEN   7
 #define KEY_COLOR_BLUE    8
+#define KEY_INIT					9
 
 static void reload_window();
 
@@ -80,4 +81,19 @@ static void in_recv_handler(DictionaryIterator *iter, void *context) {
 	}
 		
 	reload_window();
+}
+
+static void key_initialize() {
+	if(!persist_read_bool(KEY_INIT)) {
+		persist_write_bool(KEY_INVERT, true);
+		persist_write_bool(KEY_CONNECTION, true);
+		persist_write_bool(KEY_SHOW_TICKS, false);
+		persist_write_bool(KEY_SHOW_DATE, true);
+		persist_write_bool(KEY_SHOW_SECOND, true);
+		persist_write_bool(KEY_SHOW_BATTERY, false);
+		persist_write_int(KEY_COLOR_RED, 255);
+		persist_write_int(KEY_COLOR_GREEN, 0);
+		persist_write_int(KEY_COLOR_BLUE, 0);
+		persist_write_bool(KEY_INIT, true);
+	}
 }

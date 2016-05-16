@@ -7,6 +7,9 @@ Pebble.addEventListener("ready",
 Pebble.addEventListener("showConfiguration",
   function(e) {
     //Load the remote config page
+		var info = Pebble.getActiveWatchInfo();
+		console.log('Pebble model: ' + info.platform);
+		
 		var url = "https://imoto-yuya-1234.github.io/edge_analog/index.html";
     Pebble.openURL(url);
 		console.log("Showing configuration page: " + url);
@@ -41,8 +44,8 @@ Pebble.addEventListener("webviewclosed",
 		
 		var round_color = configData['round_color'];
 		dict['KEY_COLOR_RED'] = parseInt(round_color.substring(2, 4), 16);
-    dict['KEY_COLOR_GREEN'] = parseInt(round_color.substring(4, 6), 16);
-    dict['KEY_COLOR_BLUE'] = parseInt(round_color.substring(6), 16);
+		dict['KEY_COLOR_GREEN'] = parseInt(round_color.substring(4, 6), 16);
+		dict['KEY_COLOR_BLUE'] = parseInt(round_color.substring(6), 16);
   	
 		// Send to watchapp
 		Pebble.sendAppMessage(dict, function() {

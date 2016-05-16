@@ -25,7 +25,7 @@ static TimeUnits event_time;
 static void ticks_update_proc(Layer *layer, GContext *ctx) {
 	int32_t angle;
 	int16_t length, width;
-	#if defined(PBL_ROUND) 
+	#if defined(PBL_ROUND)
 	GRect bounds = layer_get_bounds(layer);
   GPoint center = grect_center_point(&bounds);
 	const int16_t radius = bounds.size.w / 2;
@@ -261,6 +261,8 @@ static void handle_battery(BatteryChargeState charge_state) {
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
+	
+	key_initialize();
 
 	if(persist_read_bool(KEY_INVERT)) {
 		connection_icon = RESOURCE_ID_NOT_CONNECTION_STATE_BLACK;

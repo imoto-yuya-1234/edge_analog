@@ -4,6 +4,7 @@
         "KEY_COLOR_GREEN": 7,
         "KEY_COLOR_RED": 6,
         "KEY_CONNECTION": 1,
+        "KEY_INIT": 9,
         "KEY_INVERT": 0,
         "KEY_SHOW_BATTERY": 5,
         "KEY_SHOW_DATE": 3,
@@ -60,7 +61,7 @@
         "chalk"
     ],
     "uuid": "b6a12803-1308-4a3e-b875-f6597d18bc13",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }
