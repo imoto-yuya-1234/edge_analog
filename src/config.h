@@ -1,15 +1,18 @@
+#pragma once
+
 #include <pebble.h>
 
-#define KEY_INVERT        0
-#define KEY_CONNECTION    1
-#define KEY_SHOW_TICKS    2
-#define KEY_SHOW_DATE     3
-#define KEY_SHOW_SECOND   4
-#define KEY_SHOW_BATTERY  5
-#define KEY_COLOR_RED     6
-#define KEY_COLOR_GREEN   7
-#define KEY_COLOR_BLUE    8
-#define KEY_INIT					9
+#define KEY_INIT					0
+#define KEY_INVERT        1
+#define KEY_CONNECTION    2
+#define KEY_SHOW_TICKS    3
+#define KEY_SHOW_DAY     	4
+#define KEY_SHOW_SECOND   5
+#define KEY_SHOW_BATTERY  6
+#define KEY_COLOR_RED     7
+#define KEY_COLOR_GREEN   8
+#define KEY_COLOR_BLUE    9
+#define KEY_LANG					10
 
 static void reload_window();
 
@@ -40,12 +43,12 @@ static void in_recv_handler(DictionaryIterator *iter, void *context) {
 		persist_write_bool(KEY_SHOW_TICKS, false);
 	}
 	
-	Tuple *show_date_t = dict_find(iter, KEY_SHOW_DATE);
-	if(show_date_t && show_date_t->value->int8 > 0) {
-		persist_write_bool(KEY_SHOW_DATE, true);
+	Tuple *show_day_t = dict_find(iter, KEY_SHOW_DAY);
+	if(show_day_t && show_day_t->value->int8 > 0) {
+		persist_write_bool(KEY_SHOW_DAY, true);
 	} 
 	else {
-		persist_write_bool(KEY_SHOW_DATE, false);
+		persist_write_bool(KEY_SHOW_DAY, false);
 	}
 	
 	Tuple *show_second_t = dict_find(iter, KEY_SHOW_SECOND);
@@ -79,21 +82,30 @@ static void in_recv_handler(DictionaryIterator *iter, void *context) {
     persist_write_int(KEY_COLOR_GREEN, green);
     persist_write_int(KEY_COLOR_BLUE, blue);
 	}
+	
+	Tuple *lang_t = dict_find(iter, KEY_LANG);
+	persist_write_string(KEY_LANG, lang_t->value->cstring);
 		
 	reload_window();
 }
 
-static void key_initialize() {
+void key_initialize() {
 	if(!persist_read_bool(KEY_INIT)) {
+		persist_write_bool(KEY_INIT, true);
 		persist_write_bool(KEY_INVERT, true);
 		persist_write_bool(KEY_CONNECTION, true);
 		persist_write_bool(KEY_SHOW_TICKS, false);
-		persist_write_bool(KEY_SHOW_DATE, true);
+		persist_write_bool(KEY_SHOW_DAY, true);
 		persist_write_bool(KEY_SHOW_SECOND, true);
 		persist_write_bool(KEY_SHOW_BATTERY, false);
 		persist_write_int(KEY_COLOR_RED, 255);
 		persist_write_int(KEY_COLOR_GREEN, 0);
 		persist_write_int(KEY_COLOR_BLUE, 0);
-		persist_write_bool(KEY_INIT, true);
+		persist_write_string(KEY_LANG, "en");
 	}
+}
+
+void config_service() {
+	app_message_register_inbox_received((AppMessageInboxReceived) in_recv_handler);
+	app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
 }

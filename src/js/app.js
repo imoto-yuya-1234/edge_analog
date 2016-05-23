@@ -33,8 +33,8 @@ Pebble.addEventListener("webviewclosed",
 		var show_ticks = configData['show_ticks'];
 		dict['KEY_SHOW_TICKS'] = configData['show_ticks'] ? 1 : 0;
 		
-		var show_date = configData['show_date'];
-		dict['KEY_SHOW_DATE'] = configData['show_date'] ? 1 : 0;
+		var show_day = configData['show_day'];
+		dict['KEY_SHOW_DAY'] = configData['show_day'] ? 1 : 0;
 		
 		var show_second = configData['show_second'];
 		dict['KEY_SHOW_SECOND'] = configData['show_second'] ? 1 : 0;
@@ -46,6 +46,9 @@ Pebble.addEventListener("webviewclosed",
 		dict['KEY_COLOR_RED'] = parseInt(round_color.substring(2, 4), 16);
 		dict['KEY_COLOR_GREEN'] = parseInt(round_color.substring(4, 6), 16);
 		dict['KEY_COLOR_BLUE'] = parseInt(round_color.substring(6), 16);
+		
+		var lang = configData['lang'];
+		dict['KEY_LANG'] = configData['lang'];
   	
 		// Send to watchapp
 		Pebble.sendAppMessage(dict, function() {
