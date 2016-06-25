@@ -3,9 +3,9 @@
 #include <pebble.h>
 #include "config.h"
 
-static Layer *s_window_layer;
-static GRect s_bounds;
-static GPoint s_center;
+Layer *g_window_layer;
+GRect g_bounds;
+GPoint g_center; 
 
 static Layer *s_date_layer;
 static TextLayer *s_day_label, *s_num_label;
@@ -114,7 +114,7 @@ static void date_update_proc(Layer *layer, GContext *ctx) {
 void display_day() {
 	if(persist_read_bool(KEY_SHOW_DAY)) {
 		layer_set_update_proc(s_date_layer, date_update_proc);
-		layer_add_child(s_window_layer, s_date_layer);
+		layer_add_child(g_window_layer, s_date_layer);
 
 		text_layer_set_text(s_day_label, s_day_buffer);
 		text_layer_set_background_color(s_day_label, GColorClear);
@@ -130,12 +130,8 @@ void display_day() {
 	}
 }
 
-void init_day(Layer *window_layer) {
-	s_window_layer = window_layer;
-  s_bounds = layer_get_bounds(window_layer);
-  s_center = grect_center_point(&s_bounds);
-	
-	s_date_layer = layer_create(s_bounds);
+void init_day() {
+	s_date_layer = layer_create(g_bounds);
 	
 	s_day_label = text_layer_create(PBL_IF_ROUND_ELSE(GRect(104, 75, 32, 30), GRect(81, 68, 32, 30)));
   s_num_label = text_layer_create(PBL_IF_ROUND_ELSE(GRect(136, 75, 20, 30), GRect(113, 68, 20, 30)));
