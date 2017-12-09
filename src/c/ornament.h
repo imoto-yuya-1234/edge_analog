@@ -105,11 +105,11 @@ void display_ticks() {
 
 static void edge_update_proc(Layer *layer, GContext *ctx) {
 	
-	if(persist_read_bool(KEY_SHOW_BATTERY)) {
-		s_battery_level = battery_state_service_peek().charge_percent;
+	if(!persist_read_bool(KEY_SHOW_BATTERY) || battery_state_service_peek().is_plugged) {
+		s_battery_level = 100;
 	}
 	else {
-		s_battery_level = 100;
+		s_battery_level = battery_state_service_peek().charge_percent;
 	}
 	#if defined(PBL_ROUND) 
   int32_t angle_start = DEG_TO_TRIGANGLE(0);

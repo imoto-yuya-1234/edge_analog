@@ -19,6 +19,14 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 	int16_t min = t->tm_min;
 	graphics_context_set_stroke_color(ctx, g_minute_color);
 	
+	#if defined(PBL_PLATFORM_APLITE)
+	#else
+	if (battery_state_service_peek().is_plugged && persist_read_bool(KEY_ROTATE)) {
+		hour += 3;
+		min += 15;
+	}
+	#endif
+	
 	// hour hand
 	const int16_t hour_hand_length = PBL_IF_ROUND_ELSE(g_bounds.size.w / 2 - 30, g_bounds.size.w / 2 - 20);
 	int32_t hour_hand_angle = (TRIG_MAX_ANGLE * (((hour % 12) * 6) + (min / 10))) / (12 * 6);
@@ -47,10 +55,18 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 static void second_update_proc(Layer *layer, GContext *ctx) {
 	time_t now = time(NULL);
   struct tm *t = localtime(&now);
+	int16_t sec = t->tm_sec;
+	
+	#if defined(PBL_PLATFORM_APLITE)
+	#else
+	if (battery_state_service_peek().is_plugged && persist_read_bool(KEY_ROTATE)) {
+		sec += 15;
+	}
+	#endif
 	
 	// second hand
   const int16_t second_hand_length = PBL_IF_ROUND_ELSE(g_bounds.size.w / 2, g_bounds.size.w / 2);
-  int32_t second_angle = TRIG_MAX_ANGLE * t->tm_sec / 60;
+  int32_t second_angle = TRIG_MAX_ANGLE * sec / 60;
   GPoint second_hand_start = {
     .x = (int16_t)(sin_lookup(second_angle) * (int32_t)(second_hand_length - 5) / TRIG_MAX_RATIO) + g_center.x,
     .y = (int16_t)(-cos_lookup(second_angle) * (int32_t)(second_hand_length - 5) / TRIG_MAX_RATIO) + g_center.y,

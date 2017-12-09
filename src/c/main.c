@@ -22,15 +22,16 @@ static void window_load(Window *window) {
 	
 	window_set_background_color(s_window, g_bg_color);
 	
-	init_ornament();
-	display_edge();
-	display_ticks();
+	init_day();
+	display_day();
 	
 	init_status();
 	display_connection();
+	valid_rot();
 	
-	init_day();
-	display_day();
+	init_ornament();
+	display_edge();
+	display_ticks();
 	
 	init_time();
 	display_time();
@@ -39,6 +40,7 @@ static void window_load(Window *window) {
 static void window_unload(Window *window) {
 	deinit_time();
 	deinit_day();
+	deinit_status();
 	deinit_ornament();
 }
 

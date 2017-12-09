@@ -13,6 +13,7 @@
 #define KEY_COLOR_GREEN   8
 #define KEY_COLOR_BLUE    9
 #define KEY_LANG					10
+#define KEY_ROTATE				11
 
 extern uint32_t g_connection_icon;
 extern GColor g_bg_color, g_ticks_color, g_minute_color, g_second_color, g_round_color;
@@ -88,7 +89,18 @@ static void in_recv_handler(DictionaryIterator *iter, void *context) {
 	
 	Tuple *lang_t = dict_find(iter, KEY_LANG);
 	persist_write_string(KEY_LANG, lang_t->value->cstring);
-		
+	
+	#if defined(PBL_PLATFORM_APLITE)
+	#else
+	Tuple *rotate_t = dict_find(iter, KEY_ROTATE);
+	if(rotate_t && rotate_t->value->int8 > 0) {
+		persist_write_bool(KEY_ROTATE, true);
+	} 
+	else {
+		persist_write_bool(KEY_ROTATE, false);
+	}
+	#endif
+	
 	reload_window();
 }
 
@@ -105,6 +117,10 @@ void initialize_value() {
 		persist_write_int(KEY_COLOR_GREEN, 0);
 		persist_write_int(KEY_COLOR_BLUE, 0);
 		persist_write_string(KEY_LANG, "en");
+		#if defined(PBL_PLATFORM_APLITE)
+		#else
+		persist_write_bool(KEY_ROTATE, true);
+		#endif
 	}
 	
 	if(persist_read_bool(KEY_INVERT)) {
